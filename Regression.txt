@@ -1,0 +1,17 @@
+# Linear Regression with uncertainty
+model{
+  # Data
+    for (i in 1:n){
+        y[i,2] ~ dnorm(mu[i],tau)
+        mu[i] <- alpha + beta*y[i,1]
+        y[i,1] ~ dnorm(x[i,1],lambdaerror[i,1])
+        x[i,2] ~ dnorm(y[i,2],lambdaerror[i,2])
+    }
+
+    # Priors
+    alpha ~ dnorm(0,.001)
+    beta ~ dnorm(0,.001)
+    tau ~ dgamma(0.001,0.001)
+}
+
+#list(alpha=0,beta=0,tau=1)
